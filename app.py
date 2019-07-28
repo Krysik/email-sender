@@ -21,6 +21,11 @@ receivers = [email]
 smtp.login(sender, os.getenv('EMAIL_PASSWORD'))
 
 
+@app.route('/')
+def index():
+  return 'Hello'
+
+
 @app.route('/email', methods=['POST'])
 def email():
   if request.method == 'POST':
@@ -33,6 +38,5 @@ def email():
       'message': msg
     })
 
-# smtp.quit()
 if __name__ == '__main__':
   app.run(debug=False)
