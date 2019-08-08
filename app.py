@@ -11,15 +11,15 @@ app = Flask(__name__)
 CORS(app)
 
 
-smtp = smtplib.SMTP(os.getenv('HOST'), os.getenv('PORT'))
-smtp.connect(os.getenv('HOST'), os.getenv('PORT'))
+smtp = smtplib.SMTP(os.environ['HOST'], os.environ['PORT'])
+smtp.connect(os.environ['HOST'], os.environ['PORT'])
 smtp.starttls()
 
-email = os.getenv('EMAIL')
+email = os.environ['EMAIL']
 sender = email
 receivers = [email]
 
-smtp.login(sender, os.getenv('EMAIL_PASSWORD'))
+smtp.login(sender, os.environ['EMAIL_PASSWORD'])
 
 
 @app.route('/')
