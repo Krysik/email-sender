@@ -12,7 +12,7 @@ CORS(app)
 
 
 smtp = smtplib.SMTP(os.environ['HOST'], os.environ['PORT_EMAIL'])
-smtp.connect(os.environ['HOST'], os.environ['PORT_EMAIL'])
+# smtp.connect(os.environ['HOST'], os.environ['PORT_EMAIL'])
 smtp.starttls()
 
 email = os.environ['EMAIL']
@@ -34,6 +34,7 @@ def email():
     subject = data['subject']
     msg = 'Subject: {}\n\n{}'.format(subject, data['message'])
     smtp.sendmail(sender, receivers, msg)
+    smtp.quit()
     return jsonify({
       'status': 200,
       'message': msg
