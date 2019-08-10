@@ -11,8 +11,8 @@ app = Flask(__name__)
 CORS(app)
 
 
-smtp = smtplib.SMTP(os.environ['HOST'], os.environ['PORT'])
-smtp.connect(os.environ['HOST'], os.environ['PORT'])
+smtp = smtplib.SMTP(os.environ['HOST'], os.environ['PORT_EMAIL'])
+smtp.connect(os.environ['HOST'], os.environ['PORT_EMAIL'])
 smtp.starttls()
 
 email = os.environ['EMAIL']
@@ -40,4 +40,4 @@ def email():
     })
 
 if __name__ == '__main__':
-  app.run(debug=False, host='0.0.0.0')
+  app.run(debug=False)
