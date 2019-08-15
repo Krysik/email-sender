@@ -10,18 +10,6 @@ load_dotenv()
 app = Flask(__name__)
 CORS(app)
 
-
-smtp = smtplib.SMTP(os.environ['HOST'], os.environ['PORT_EMAIL'])
-# smtp.connect(os.environ['HOST'], os.environ['PORT_EMAIL'])
-smtp.starttls()
-
-email = os.environ['EMAIL']
-sender = email
-receivers = [email]
-
-smtp.login(sender, os.environ['EMAIL_PASSWORD'])
-
-
 @app.route('/')
 def index():
   return 'Hello'
@@ -30,9 +18,18 @@ def index():
 @app.route('/email', methods=['POST'])
 def email():
   if request.method == 'POST':
+    smtp = smtplib.SMTP(os.environ['HOST'], os.environ['PORT_EMAIL'])
+    smtp.connect(os.environ['HOST'], os.environ['PORT_EMAIL'])
+    smtp.starttls()
+
+    email = os.environ['EMAIL']
+    sender = email
+    receivers = [email]
+
+    smtp.login(sender, os.environ['EMAIL_PASSWORD'])
     data = request.get_json()
-    subject = data['subject']
-    msg = 'Subject: {}\n\n{}'.format(subject, data['message'])
+    fromMsg = data['fromMsg']
+    msg = 'Subject: wazne - marcin-krysinski.pl\n\nfrom: {}\n{}'.format(fromMsg, data['message'])
     smtp.sendmail(sender, receivers, msg)
     smtp.quit()
     return jsonify({
